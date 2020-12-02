@@ -27,16 +27,16 @@ export default function EntryPage({navigation}) {
           
             <View style={styles.button}>
             <TouchableOpacity
-             onPress={()=>{
-              navigation.navigate("signup")}}
-             style={styles.signup}>
+                  onPress={() => navigation.navigate("register")}
+             style={styles.signup}
+             >
                 <Text style={{fontSize:18}}>SIGN UP</Text>
             </TouchableOpacity>
             
 
-            <TouchableOpacity 
-             onPress={()=>{
-              navigation.navigate("login")}}
+            <TouchableOpacity  
+             onPress={()=>
+              navigation.navigate("signin")}
             style={styles.signin}>
                 <Text  style={{fontSize:18,}}>SIGN IN</Text>
             </TouchableOpacity>

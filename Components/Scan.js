@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button,TouchableOpacity } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 
-export default function Scan() {
+export default function Scan({navigation}) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+
+    
 
   useEffect(() => {
     (async () => {
@@ -12,10 +15,22 @@ export default function Scan() {
       setHasPermission(status === 'granted');
     })();
   }, []);
+ 
 
+  
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    navigation.navigate("memberprofile",{
+      name: "Alfred Appiagyei",
+      role: "Mobile & Web Developer",
+      phone: "+233 555078657",
+      mail: "appiagyei@gmail.com",
+      location: "Madina Estate",
+      
+     
+    })
+    console.log(data)
   };
 
   if (hasPermission === null) {
@@ -32,12 +47,19 @@ export default function Scan() {
         flexDirection: 'column',
         justifyContent: 'flex-end',
       }}>
+      
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
 
-      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+      
+{scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+      <TouchableOpacity style={{
+        padding: 25
+      }} onPress={() => navigation.goBack()}>
+         <MaterialCommunityIcons name="window-close" size={45} color="white" /> 
+      </TouchableOpacity>
     </View>
   );
 }

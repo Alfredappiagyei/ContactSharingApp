@@ -1,7 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
+ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View , TouchableOpacity} from 'react-native'; 
-import QRCode from 'react-native-qrcode-svg';
+import { QRCode } from 'react-native-custom-qr-codes-expo';
+
+
+
 
 
 export default function Home({navigation}) {
@@ -14,19 +17,12 @@ export default function Home({navigation}) {
        </View>
 
       <View style={styles.qrContainer}>
-      <QRCode
-
-      value='hello'
-      color={'black'}
-      backgroundColor={'white'}
+      <QRCode content='https://reactnative.com'
+      content="Alfred"
+      codeStyle="square"
       size={200}
-      logo={{url:
-        'https://www.google.com/search?q=qrcode+images+download&rlz=1C1CHBF_enGH875GH875&sxsrf=ALeKk02Db8eIpQnr-igVYebuCJ8J_Pv48w:1603394823605&tbm=isch&source=iu&ictx=1&fir=uIK0RlmQ5g2yWM%252CNi7MK0Yu725SRM%252C_&vet=1&usg=AI4_-kSl7YswXemFyewF-tIiOCLZwvWbyA&sa=X&ved=2ahUKEwjz45SX98jsAhXHi1wKHV42ChkQ9QF6BAgKECU#imgrc=uIK0RlmQ5g2yWM'
-    }}
-    logoMargin={2}
-    logoBorderRadius={10}
-    logoBackgroundColor={'transparent'}
-       />
+      color="black"
+      />
       </View>
 
    <View></View>
@@ -38,11 +34,12 @@ export default function Home({navigation}) {
           <Text style={styles.addConnection}>Want to add a new connection?</Text>
           <TouchableOpacity 
            onPress={()=>{
-            navigation.navigate("picker")}}
+            navigation.navigate("scan")}}
             style={styles.scanQR}>
                 <Text style={{color:"red"}}>Scan QR</Text>
             </TouchableOpacity>
       </View>
+      
      </View>
   );
 }

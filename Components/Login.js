@@ -1,24 +1,51 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, ActivityIndicator } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput,  } from 'react-native';
 import entry from '../assets/login.jpg'
+import {connect} from 'react-redux';
+import {loginEmailAccount,} from '../Redux/actions/authActions'
 
+class Login extends Component {
+ 
+  constructor(props){
+    super(props)
+    this.state ={
+      email:"",
+      password:"",
+    }
+  }
 
-export default function Login({navigation}) {
-  return (
+  handleUpdateState=(name,value) =>{
+      this.setState({
+        [name]:value
+      })
+  }
+
+  handleOnSubmit=()=>{
+    this.props.loginEmailAccount (this.state.email, this.state.password)
+  }
+
+    render() {
+  
+  return ( 
     <View style={styles.container}>  
 
            <View style={styles.imageContainer}>
            <Image source={entry}  style={styles.image}></Image>
            </View>
-
+ 
 
            <View style={styles.headingContainer}>
            <View style={styles.inputRowOne}>
                <Text style={{fontSize:17, marginTop:15, marginRight:30}}>Email</Text>
                <TextInput 
-               placeholder="appiagyei@gmail.com"
-               style={styles.textInputOne }>
+               placeholder="appiagyei@gmail.com" 
+               value={this.state.email}  
+               onChangeText={(text) =>{
+                this.handleUpdateState('email',text)
+              }}    
+               style={styles.textInputOne }
+               >
                </TextInput>
            </View>
  
@@ -27,6 +54,10 @@ export default function Login({navigation}) {
                <TextInput 
                 secureTextEntry={true}
                placeholder="*****"
+               value={this.state.password}
+               onChangeText={(text) =>{
+                this.handleUpdateState('password',text)
+              }}
                 style={styles.textInputTwo}>
                </TextInput>
            </View>
@@ -36,8 +67,7 @@ export default function Login({navigation}) {
           
          <View style={styles.button}>    
             <TouchableOpacity 
-             onPress={()=>{
-                navigation.navigate("home")}}
+                  onPress={this.handleOnSubmit}
              style={styles.signin}>
                 <Text style={{color:"#fff"}}>SIGN IN</Text>
             </TouchableOpacity>
@@ -57,7 +87,8 @@ export default function Login({navigation}) {
 
     </View>
   );
-}    
+}   
+} 
 
 const styles = StyleSheet.create({
    container: {   
@@ -130,7 +161,12 @@ const styles = StyleSheet.create({
         bottom:57
     
     },
-
-
-
 });
+
+
+ 
+const mapStateToProps =(state) =>{
+    return {auth:state}
+  }
+   export default connect(mapStateToProps,{loginEmailAccount})(Login);
+  
